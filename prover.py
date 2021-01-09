@@ -4,7 +4,8 @@
 # 2014 Stephan Boyer
 
 from language import *
-
+from io import StringIO
+import sys
 
 ##############################################################################
 # Unification
@@ -142,6 +143,10 @@ class Sequent:
 # returns True if the sequent is provable
 # returns False or loops forever if the sequent is not provable
 def proveSequent(sequent):
+    global proof
+    result = StringIO()
+    sys.stdout = result
+
     # reset the time for each formula in the sequent
     for formula in sequent.left:
         formula.setInstantiationTime(0)
@@ -162,6 +167,8 @@ def proveSequent(sequent):
         if old_sequent is None:
             break
         print('%s. %s' % (old_sequent.depth, old_sequent))
+        proof = result.getvalue()
+
 
         # check if this sequent is axiomatically true without unification
         if len(set(old_sequent.left.keys()) & set(old_sequent.right.keys())) > 0:
@@ -470,7 +477,7 @@ def proveSequent(sequent):
                     break
 
     # no more sequents to prove
-    return True
+    return (True, proof)
 
 
 # returns True if the formula is provable

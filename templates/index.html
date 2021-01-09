@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<form action="/sequent" method="post">
+    <p>Input a sequent:</p>
+    <div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Input your sequent here" aria-label="Sequent input"
+                   name="sequent-input"
+            >
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+    </div>
+</form>
+{% endblock %}
+
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Temporal logic GLT prover</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Welcome to temporal logic GLT prover!</h1>-->
+<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac augue aliquet, tristique mi sed, malesuada-->
+<!--    turpis. Morbi blandit ante sit amet dolor scelerisque efficitur. Quisque porttitor urna vel diam fringilla, a rutrum-->
+<!--    metus varius. Vestibulum ultrices dolor risus, ac egestas metus semper nec. Quisque a tortor vitae ante consectetur-->
+<!--    porttitor. Praesent at quam sed nunc condimentum egestas interdum vitae purus. Vestibulum in urna malesuada, varius-->
+<!--    nibh vel, vulputate lorem. Mauris purus mi, suscipit a facilisis ac, pretium sed quam. Nam consectetur justo vel sem-->
+<!--    scelerisque, sed semper dui tempor. Nulla eget erat et enim tempor semper at sed magna. Aliquam interdum eros ut-->
+<!--    risus scelerisque vulputate. Suspendisse vehicula augue ut ante rhoncus porta.</p>-->
+<!--<p>{{content}}</p>-->
+<!--{% for i in range(0,10) %}-->
+<!--    <p>From range: {{l}}</p>-->
+<!--{% endfor%}-->
+<!--</body>-->
+<!--</html>-->

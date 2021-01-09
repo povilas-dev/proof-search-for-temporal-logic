@@ -333,13 +333,13 @@ def typecheck_formula(formula):
         return
     if isinstance(formula, ForAll):
         if not isinstance(formula.variable, Variable):
-            raise InvalidInputError('Invalid bound variable in ' 
+            raise InvalidInputError('Invalid bound variable in '
                                     'FORALL quantifier: %s.' % formula.variable)
         typecheck_formula(formula.formula)
         return
     if isinstance(formula, ThereExists):
         if not isinstance(formula.variable, Variable):
-            raise InvalidInputError('Invalid bound variable in ' 
+            raise InvalidInputError('Invalid bound variable in '
                                     'exists quantifier: %s.' % formula.variable)
         typecheck_formula(formula.formula)
         return
@@ -358,119 +358,125 @@ def check_formula(formula):
             raise InvalidInputError('Enter a formula, not a term.')
 
 
-def main():
-    print('First-Order Logic Theorem Prover')
-    print('2014 Stephan Boyer')
-    print('')
-    print('Terms:')
-    print('')
-    print('  x               (variable)')
-    print('  f(term, ...)    (function)')
-    print('')
-    print('Formulae:')
-    print('')
-    print('  P(term)        (predicate)')
-    print('  not P          (complement)')
-    print('  P or Q         (disjunction)')
-    print('  P and Q        (conjunction)')
-    print('  P implies Q    (implication)')
-    print('  forall x. P    (universal quantification)')
-    print('  exists x. P    (existential quantification)')
-    print('')
-    print('Enter formulae at the prompt. The following commands '
-          'are also available for manipulating axioms:')
-    print('')
-    print('  axioms              (list axioms)')
-    print('  lemmas              (list lemmas)')
-    print('  axiom <formula>     (add an axiom)')
-    print('  lemma <formula>     (prove and add a lemma)')
-    print('  remove <formula>    (remove an axiom or lemma)')
-    print('  reset               (remove all axioms and lemmas)')
+def resolve(inp):
+    # print('First-Order Logic Theorem Prover')
+    # print('2014 Stephan Boyer')
+    # print('')
+    # print('Terms:')
+    # print('')
+    # print('  x               (variable)')
+    # print('  f(term, ...)    (function)')
+    # print('')
+    # print('Formulae:')
+    # print('')
+    # print('  P(term)        (predicate)')
+    # print('  not P          (complement)')
+    # print('  P or Q         (disjunction)')
+    # print('  P and Q        (conjunction)')
+    # print('  P implies Q    (implication)')
+    # print('  forall x. P    (universal quantification)')
+    # print('  exists x. P    (existential quantification)')
+    # print('')
+    # print('Enter formulae at the prompt. The following commands '
+    #       'are also available for manipulating axioms:')
+    # print('')
+    # print('  axioms              (list axioms)')
+    # print('  lemmas              (list lemmas)')
+    # print('  axiom <formula>     (add an axiom)')
+    # print('  lemma <formula>     (prove and add a lemma)')
+    # print('  remove <formula>    (remove an axiom or lemma)')
+    # print('  reset               (remove all axioms and lemmas)')
 
     axioms = set()
     lemmas = {}
 
-    while True:
-        try:
-            inp = input('\n> ')
-            commands = ['axiom', 'lemma', 'axioms', 'lemmas', 'remove', 'reset']
-            tokens = [(token.lower() if token in commands else token)
-                      for token in lex(inp)]
-            for token in tokens[1:]:
-                if token in commands:
-                    raise InvalidInputError('Unexpected keyword: %s.' % token)
-            if len(tokens) > 0 and tokens[0] == 'axioms':
-                if len(tokens) > 1:
-                    raise InvalidInputError('Unexpected: %s.' % tokens[1])
-                for axiom in axioms:
-                    print(axiom)
-            elif len(tokens) > 0 and tokens[0] == 'lemmas':
-                if len(tokens) > 1:
-                    raise InvalidInputError('Unexpected: %s.' % tokens[1])
-                for lemma in lemmas:
-                    print(lemma)
-            elif len(tokens) > 0 and tokens[0] == 'axiom':
-                formula = parse(tokens[1:])
-                check_formula(formula)
-                axioms.add(formula)
-                print('Axiom added: %s.' % formula)
-            elif len(tokens) > 0 and tokens[0] == 'lemma':
-                formula = parse(tokens[1:])
-                check_formula(formula)
-                result = proveFormula(axioms | set(lemmas.keys()), formula)
-                if result:
-                    lemmas[formula] = axioms.copy()
-                    print('Lemma proven: %s.' % formula)
-                else:
-                    print('Lemma unprovable: %s.' % formula)
-            elif len(tokens) > 0 and tokens[0] == 'remove':
-                formula = parse(tokens[1:])
-                check_formula(formula)
-                if formula in axioms:
-                    axioms.remove(formula)
-                    bad_lemmas = []
-                    for lemma, dependent_axioms in lemmas.items():
-                        if formula in dependent_axioms:
-                            bad_lemmas.append(lemma)
-                    for lemma in bad_lemmas:
-                        del lemmas[lemma]
-                    print('Axiom removed: %s.' % formula)
-                    if len(bad_lemmas) == 1:
-                        print('This lemma was proven using that ' 
-                              'axiom and was also removed:')
-                        for lemma in bad_lemmas:
-                            print('  %s' % lemma)
-                    if len(bad_lemmas) > 1:
-                        print('These lemmas were proven using that ' 
-                              'axiom and were also removed:')
-                        for lemma in bad_lemmas:
-                            print('  %s' % lemma)
-                elif formula in lemmas:
-                    del lemmas[formula]
-                    print('Lemma removed: %s.' % formula)
-                else:
-                    print('Not an axiom: %s.' % formula)
-            elif len(tokens) > 0 and tokens[0] == 'reset':
-                if len(tokens) > 1:
-                    raise InvalidInputError('Unexpected: %s.' % tokens[1])
-                axioms = set()
-                lemmas = {}
+    # while True:
+    try:
+        # inp = input('\n> ')
+        commands = ['axiom', 'lemma', 'axioms', 'lemmas', 'remove', 'reset']
+        tokens = [(token.lower() if token in commands else token)
+                  for token in lex(inp)]
+        for token in tokens[1:]:
+            if token in commands:
+                raise InvalidInputError('Unexpected keyword: %s.' % token)
+        if len(tokens) > 0 and tokens[0] == 'axioms':
+            if len(tokens) > 1:
+                raise InvalidInputError('Unexpected: %s.' % tokens[1])
+            for axiom in axioms:
+                print(axiom)
+        elif len(tokens) > 0 and tokens[0] == 'lemmas':
+            if len(tokens) > 1:
+                raise InvalidInputError('Unexpected: %s.' % tokens[1])
+            for lemma in lemmas:
+                print(lemma)
+        elif len(tokens) > 0 and tokens[0] == 'axiom':
+            formula = parse(tokens[1:])
+            check_formula(formula)
+            axioms.add(formula)
+            print('Axiom added: %s.' % formula)
+        elif len(tokens) > 0 and tokens[0] == 'lemma':
+            formula = parse(tokens[1:])
+            check_formula(formula)
+            result = proveFormula(axioms | set(lemmas.keys()), formula)
+            if result:
+                lemmas[formula] = axioms.copy()
+                print('Lemma proven: %s.' % formula)
             else:
-                formula = parse(tokens)
-                check_formula(formula)
-                result = proveFormula(axioms | set(lemmas.keys()), formula)
-                if result:
-                    print('Formula proven: %s.' % formula)
-                else:
-                    print('Formula unprovable: %s.' % formula)
-        except InvalidInputError as e:
-            print(e.message)
-        except KeyboardInterrupt:
-            pass
-        except EOFError:
-            print('')
-            break
+                print('Lemma unprovable: %s.' % formula)
+        elif len(tokens) > 0 and tokens[0] == 'remove':
+            formula = parse(tokens[1:])
+            check_formula(formula)
+            if formula in axioms:
+                axioms.remove(formula)
+                bad_lemmas = []
+                for lemma, dependent_axioms in lemmas.items():
+                    if formula in dependent_axioms:
+                        bad_lemmas.append(lemma)
+                for lemma in bad_lemmas:
+                    del lemmas[lemma]
+                print('Axiom removed: %s.' % formula)
+                if len(bad_lemmas) == 1:
+                    print('This lemma was proven using that '
+                          'axiom and was also removed:')
+                    for lemma in bad_lemmas:
+                        print('  %s' % lemma)
+                if len(bad_lemmas) > 1:
+                    print('These lemmas were proven using that '
+                          'axiom and were also removed:')
+                    for lemma in bad_lemmas:
+                        print('  %s' % lemma)
+            elif formula in lemmas:
+                del lemmas[formula]
+                print('Lemma removed: %s.' % formula)
+            else:
+                print('Not an axiom: %s.' % formula)
+        elif len(tokens) > 0 and tokens[0] == 'reset':
+            if len(tokens) > 1:
+                raise InvalidInputError('Unexpected: %s.' % tokens[1])
+            axioms = set()
+            lemmas = {}
+        else:
+            formula = parse(tokens)
+            check_formula(formula)
+            old_stdout = sys.stdout
+            boolean_result, proof = proveFormula(axioms | set(lemmas.keys()), formula)
+            sys.stdout = old_stdout
+            if boolean_result:
+                print('Formula proven: %s.' % formula)
+                return boolean_result, proof
+                # print('Formula proven: %s.' % formula)
+            else:
+                print('Formula unprovable: %s.' % formula)
+                return boolean_result, proof
 
+                # print('Formula unprovable: %s.' % formula)
+    except InvalidInputError as e:
+        print(e.message)
+    except KeyboardInterrupt:
+        pass
+    except EOFError:
+        print('')
 
-if __name__ == '__main__':
-    main()
+#
+# if __name__ == '__main__':
+#     main()

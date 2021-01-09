@@ -1,0 +1,16 @@
+{% extends "base.html"%}
+{% block title %}Sequent proof{% endblock %}
+{% block content %}
+<h2>Sequent {{sequent}} is {{boolean_result}}.</h2>
+<h2>Proof for sequent:</h2>
+<div class="proofContainer">
+<pre>
+    <code>
+         {{proof}}
+    </code>
+</pre>
+    </div>
+
+
+<h1>Content from proof.html</h1>
+{% endblock %}
