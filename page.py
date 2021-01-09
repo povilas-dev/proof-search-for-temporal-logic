@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request
-import main as prover_main
+import prover_output as prover_main
 
 app = Flask(__name__)
 
@@ -22,8 +22,12 @@ def login():
 def proof(seq):
     (result, result_proof) = prover_main.resolve(seq)
     print("Proof:")
-    print(result_proof)
-    return render_template("proof.html", sequent=seq, boolean_result=result, proof=result_proof)
+    proof_list = result_proof.split('\n')
+    proof_list.pop()
+    proof_list.reverse()
+    print(proof_list)
+
+    return render_template("proof.html", sequent=seq, boolean_result=result, proof='\n'.join(map(str, proof_list)))
 
 
 if __name__ == "__main__":

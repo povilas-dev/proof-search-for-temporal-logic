@@ -1,8 +1,16 @@
+.mainContainer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+    align-items: flex-start;
+}
 pre code {
     background-color: #eee;
     border: 1px solid #999;
     display: block;
     padding: 20px;
+    padding-top: 0px;
     white-space: pre-line;
 }
 .proofContainer {
@@ -13,6 +21,25 @@ pre code {
 h1 {
     color: blue;
 }
-body {
-    padding: 20px;
+
+.rule {
+    width: 180px;
+}
+
+.definition {
+    font-weight: bold;
+    width: 180px;
+}
+
+.side-by-side {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    width: 100%;
+}
+.propositions {
+    margin-bottom: 20px;
+}
+.propositions, .operations {
+    width: 360px;
 }

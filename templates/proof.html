@@ -1,7 +1,14 @@
 {% extends "base.html"%}
 {% block title %}Sequent proof{% endblock %}
 {% block content %}
-<h2>Sequent {{sequent}} is {{boolean_result}}.</h2>
+<h2>Sekvencija „{{sequent}}“ yra
+    {% if boolean_result %}
+    išvedama.
+    {% else %}
+    neišvedama.
+    {% endif %}
+</h2>
+{% if proof %}
 <h2>Proof for sequent:</h2>
 <div class="proofContainer">
 <pre>
@@ -9,8 +16,7 @@
          {{proof}}
     </code>
 </pre>
-    </div>
-
-
-<h1>Content from proof.html</h1>
+</div>
+{% endif %}
+{% include 'input-component.html' %}
 {% endblock %}

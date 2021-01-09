@@ -1,17 +1,37 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<form action="/sequent" method="post">
-    <p>Input a sequent:</p>
-    <div>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Input your sequent here" aria-label="Sequent input"
-                   name="sequent-input"
-            >
-        </div>
-        <input type="submit" class="btn btn-primary" value="Submit"/>
+<h2>Programos naudojimosi instrukcija</h2>
+<div class="side-by-side">
+    <div class="operations">
+        <ul class="list-group propositions">
+            <li class="list-group-item active" aria-current="true">Teiginiai</li>
+            <li class="list-group-item"><span class="rule">P, Q, R, ir kt...</span>
+            </li>
+        </ul>
+        <ul class="list-group list-group-horizontal operations">
+            <li class="list-group-item active rule">Panaudojimas kode</li>
+            <li class="list-group-item active rule">Loginės operacijos</li>
+        </ul>
+        <ul class="list-group list-group-horizontal operations">
+            <li class="list-group-item rule">P and Q</li>
+            <li class="list-group-item definition">Konjunkcija</li>
+        </ul>
+        <ul class="list-group list-group-horizontal operations">
+            <li class="list-group-item rule">P or Q</li>
+            <li class="list-group-item definition">Disjunkcija</li>
+        </ul>
+        <ul class="list-group list-group-horizontal operations">
+            <li class="list-group-item rule">P implies Q</li>
+            <li class="list-group-item definition">Implikacija</li>
+        </ul>
+        <ul class="list-group list-group-horizontal operations">
+            <li class="list-group-item rule">not P</li>
+            <li class="list-group-item definition">Neigimas</li>
+        </ul>
     </div>
-</form>
+</div>
+{% include 'input-component.html' %}
 {% endblock %}
 
 <!--<html>-->
