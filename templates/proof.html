@@ -9,7 +9,7 @@
     {% endif %}
 </h2>
 {% if proof %}
-<h2>Proof for sequent:</h2>
+<h2>Sekvencijos išvedimas:</h2>
 <div class="proofContainer">
 <pre>
     <code>
@@ -19,4 +19,7 @@
 </div>
 {% endif %}
 {% include 'input-component.html' %}
+<form action="/" method="get">
+    <input type="submit" class="btn btn-outline-secondary" value="Grįžti atgal"/>
+</form>
 {% endblock %}
