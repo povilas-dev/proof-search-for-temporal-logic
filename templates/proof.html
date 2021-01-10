@@ -32,35 +32,15 @@ Sequent proof
         <table class="proof-table">
             {% for el in sequent_list %}
             <tr>
-                <td>
-                    <table>
-                        <tr>
-                            <td>{{el}}</td>
-                            <td>
-                                <div class="rulename">
-                                    {% if el.applied_operation != None %}
-                                    <span class="bold">({{el.applied_operation}})</span>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
+                <td class="conc" colspan="2">{{el}}</td>
+                <td class="rulename" rowspan="2">
+                    <div class="rulename">
+                        {% if el.applied_operation != None %}
+                        <span class="bold">({{el.applied_operation}})</span>
+                        {% endif %}
+                    </div>
                 </td>
-<!--                <td class="rulename" rowspan="2">-->
-<!--                    <div class="rulename">-->
-<!--                        {% if el.applied_operation != None %}-->
-<!--                        <span class="bold">({{el.applied_operation}})</span>-->
-<!--                        {% endif %}-->
-<!--                    </div>-->
-<!--                </td>-->
             </tr>
-<!--            <tr>-->
-<!--                <td class="conc">{{el}}</td>-->
-<!--            </tr>-->
             {% endfor %}
         </table>
     </div>

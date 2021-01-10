@@ -23,9 +23,11 @@ def proof(seq):
             proof_list = result_proof.split('\n')
             proof_list.pop()
             proof_list.reverse()
-            print(type(sequent_proof_list))
             sequent_proof_list.reverse()
-            tree = build_tree(sequent_proof_list)
+            for el in sequent_proof_list:
+                print("seq: ", el, "parent:", el.parent_hash)
+                # print(el.siblings)
+            # tree = build_tree(sequent_proof_list)
             return render_template("proof.html", sequent=seq, boolean_result=result, sequent_list=sequent_proof_list,
                                    proof='\n'.join(map(str, proof_list)))
         else:
@@ -46,17 +48,17 @@ def sequent():
         return render_template("index.html")
 
 
-def build_tree(sequent_list):
-    # returns result tree as string html table code
-    depths = map(lambda el: el.depth, sequent_list)
-    max_depth = max(list(depths))
-    result_tree = "<table>"
-    for i in range(max_depth):
-        result_tree += "<tr>" + "<td>" + str(sequent_list[i]) + "</td>" + "</tr>"
-    result_tree += "</table>"
-    print("BUILDING TREE")
-    print(result_tree)
-    return result_tree
+# def build_tree(sequent_list):
+#     # returns result tree as string html table code
+#     depths = map(lambda el: el.depth, sequent_list)
+#     max_depth = max(list(depths))
+#     result_tree = "<table>"
+#     for i in range(max_depth):
+#         result_tree += "<tr>" + "<td>" + str(sequent_list[i]) + "</td>" + "</tr>"
+#     result_tree += "</table>"
+#     print("BUILDING TREE")
+#     print(result_tree)
+#     return result_tree
 
 
 if __name__ == "__main__":
