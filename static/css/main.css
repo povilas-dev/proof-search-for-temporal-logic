@@ -1,9 +1,11 @@
-.mainContainer {
-    padding: 20px;
+.main-container {
     display: flex;
     flex-direction: column;
-    justify-items: flex-start;
+    justify-content: space-around;
     align-items: flex-start;
+}
+.main-container > div {
+    width: 100%;
 }
 pre code {
     background-color: #eee;
@@ -17,23 +19,19 @@ pre code {
     width: 50%;
 }
 
-h1 {
-    color: blue;
-}
-
 .rule {
     width: 180px;
 }
 
-.definition {
+.bold {
     font-weight: bold;
-    width: 180px;
 }
 
 .side-by-side {
     display: flex;
     flex-direction: row;
-    justify-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
 }
 .propositions {
@@ -41,4 +39,54 @@ h1 {
 }
 .propositions, .operations {
     width: 360px;
+    margin-bottom: 20px;
+}
+.operations li {
+    width: 180px;
+}
+
+.proof-status {
+    height: 1.8rem;
+    margin-bottom: 6px;
+}
+.section-header {
+    margin-bottom: 16px;
+}
+.section-description {
+    width: 100%;
+    border: 1px solid #ced4da;
+    padding: 12px;
+    border-radius: 0.25rem;
+    margin-bottom: 20px;
+    background-color: white;
+}
+.section-description p {
+    margin: 0px;
+}
+.sub-container {
+    border: 1px solid #ced4da;
+    padding: 12px 12px 12px 20px;
+    border-radius: 0.25rem;
+    margin: 20px;
+    background-color: #f8f9fa;
+}
+#proof-success {
+    filter: invert(41%) sepia(49%) saturate(2587%) hue-rotate(93deg) brightness(99%) contrast(104%);
+}
+
+.example-code {
+    min-width: 300px;
+}
+.example-result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 110px;
+}
+
+.notif {
+    position: absolute;
+    z-index: 10;
+    top: 60px;
+    left: 26px;
 }

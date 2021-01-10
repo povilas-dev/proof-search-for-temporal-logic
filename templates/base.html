@@ -14,12 +14,12 @@
         <span class="navbar-brand mb-0 h1">Išvedimo paieška laiko logikoje G<sub>L</sub>T</span>
     </div>
 </nav>
-<div class="mainContainer">
+<div class="main-container">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>{{ message }}</strong> You should check in on some of those fields below.
+    <div class="alert alert-danger alert-dismissible fade show notif" role="alert">
+        <strong>{{ message }}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 

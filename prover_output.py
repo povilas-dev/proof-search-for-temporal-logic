@@ -473,6 +473,7 @@ def resolve(inp):
                 # print('Formula unprovable: %s.' % formula)
     except InvalidInputError as e:
         print(e.message)
+        return e
     except KeyboardInterrupt:
         pass
     except EOFError:

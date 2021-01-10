@@ -1,11 +1,9 @@
-<form action="/sequent" method="post">
-    <div id="sequent-form">
-        <span>Įveskite sekvenciją:</span>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Pavyzdžiui: P implies P" aria-label="Sequent input"
-                   name="sequent-input"
-            >
-        </div>
-        <input type="submit" class="btn btn-primary" value="Pateikti"/>
+<form class="sub-container" id="sequent-form" action="/sequent" method="post">
+    <h3 class="form-label">Įveskite sekvenciją:</h3>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Pavyzdžiui: P implies P" aria-label="Sequent input"
+               name="sequent-input" id="sequent-input"
+        >
     </div>
+    <input type="submit" class="btn btn-success" value="Pateikti"/>
 </form>

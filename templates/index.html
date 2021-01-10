@@ -1,57 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<section>
-    <h2>Programos naudojimosi instrukcija</h2>
-    <div class="side-by-side">
-        <div class="operations">
-            <ul class="list-group propositions">
-                <li class="list-group-item active" aria-current="true">Teiginiai</li>
-                <li class="list-group-item"><span class="rule">P, Q, R, ir kt...</span>
-                </li>
-            </ul>
-            <ul class="list-group list-group-horizontal operations">
-                <li class="list-group-item active rule">Panaudojimas kode</li>
-                <li class="list-group-item active rule">Loginės operacijos</li>
-            </ul>
-            <ul class="list-group list-group-horizontal operations">
-                <li class="list-group-item rule">P and Q</li>
-                <li class="list-group-item definition">Konjunkcija</li>
-            </ul>
-            <ul class="list-group list-group-horizontal operations">
-                <li class="list-group-item rule">P or Q</li>
-                <li class="list-group-item definition">Disjunkcija</li>
-            </ul>
-            <ul class="list-group list-group-horizontal operations">
-                <li class="list-group-item rule">P implies Q</li>
-                <li class="list-group-item definition">Implikacija</li>
-            </ul>
-            <ul class="list-group list-group-horizontal operations">
-                <li class="list-group-item rule">not P</li>
-                <li class="list-group-item definition">Neigimas</li>
-            </ul>
-        </div>
-    </div>
-</section>
-{% include 'input-component.html' %}
-{% endblock %}
 
-<!--<html>-->
-<!--<head>-->
-<!--    <title>Temporal logic GLT prover</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>Welcome to temporal logic GLT prover!</h1>-->
-<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac augue aliquet, tristique mi sed, malesuada-->
-<!--    turpis. Morbi blandit ante sit amet dolor scelerisque efficitur. Quisque porttitor urna vel diam fringilla, a rutrum-->
-<!--    metus varius. Vestibulum ultrices dolor risus, ac egestas metus semper nec. Quisque a tortor vitae ante consectetur-->
-<!--    porttitor. Praesent at quam sed nunc condimentum egestas interdum vitae purus. Vestibulum in urna malesuada, varius-->
-<!--    nibh vel, vulputate lorem. Mauris purus mi, suscipit a facilisis ac, pretium sed quam. Nam consectetur justo vel sem-->
-<!--    scelerisque, sed semper dui tempor. Nulla eget erat et enim tempor semper at sed magna. Aliquam interdum eros ut-->
-<!--    risus scelerisque vulputate. Suspendisse vehicula augue ut ante rhoncus porta.</p>-->
-<!--<p>{{content}}</p>-->
-<!--{% for i in range(0,10) %}-->
-<!--    <p>From range: {{l}}</p>-->
-<!--{% endfor%}-->
-<!--</body>-->
-<!--</html>-->
+<div class="side-by-side">
+    {% include 'instructions.html' %}
+    {% include 'examples.html' %}
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+<section id="examples" class="sub-container" style="width: 35%;">
+    <h2 class="section-header">Pavyzdžiai</h2>
+    <div class="operations">
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item active example-code">Kodas</li>
+            <li class="list-group-item active example-result">Išvedama?</li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item example-code">
+                P or (not P)
+            </li>
+            <li class="list-group-item example-result">
+                {% include 'provable-example-component.html' %}
+            </li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item example-code">
+                P implies P
+            </li>
+            <li class="list-group-item example-result">
+                {% include 'provable-example-component.html' %}
+            </li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item example-code">
+                P implies Q
+            </li>
+            <li class="list-group-item example-result">
+                {% include 'unprovable-example-component.html' %}
+            </li>
+        </ul>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item example-code">
+                not(P or Q) implies not(P)
+            </li>
+            <li class="list-group-item example-result">
+                {% include 'provable-example-component.html' %}
+            </li>
+        </ul>
+    </div>
+</section>
