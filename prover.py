@@ -133,10 +133,7 @@ class Sequent:
         if right_part != '':
             right_part = ' ' + right_part
 
-        if self.applied_operation is None:
-            return left_part + '⊢' + right_part
-        else:
-            return left_part + '⊢' + right_part + '(' + self.applied_operation + ')'
+        return left_part + '⊢' + right_part
 
     def __hash__(self):
         return hash(str(self))
@@ -150,6 +147,7 @@ class Sequent:
 # returns False or loops forever if the sequent is not provable
 def proveSequent(sequent):
     global proof
+    sequent_proof = []
     result = StringIO()
     sys.stdout = result
 
@@ -174,6 +172,7 @@ def proveSequent(sequent):
             break
         print('%s. %s' % (old_sequent.depth, old_sequent))
         proof = result.getvalue()
+        sequent_proof.append(old_sequent)
 
         # check if this sequent is axiomatically true without unification
         if len(set(old_sequent.left.keys()) & set(old_sequent.right.keys())) > 0:
@@ -247,7 +246,7 @@ def proveSequent(sequent):
                 else:
                     apply_right = True
             if left_formula is None and right_formula is None:
-                return False, None
+                return False, None, None
 
             # apply a left rule
             if apply_left:
@@ -257,7 +256,7 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '¬⊢'
                     )
                     del new_sequent.left[left_formula]
                     new_sequent.right[left_formula.formula] = \
@@ -272,7 +271,7 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '∧⊢'
                     )
                     del new_sequent.left[left_formula]
                     new_sequent.left[left_formula.formula_a] = \
@@ -289,14 +288,14 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '∨⊢'
                     )
                     new_sequent_b = Sequent(
                         old_sequent.left.copy(),
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '∨⊢'
                     )
                     del new_sequent_a.left[left_formula]
                     del new_sequent_b.left[left_formula]
@@ -317,14 +316,14 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '→⊢'
                     )
                     new_sequent_b = Sequent(
                         old_sequent.left.copy(),
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '→⊢'
                     )
                     del new_sequent_a.left[left_formula]
                     del new_sequent_b.left[left_formula]
@@ -386,7 +385,7 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '⊢¬'
                     )
                     del new_sequent.right[right_formula]
                     new_sequent.left[right_formula.formula] = \
@@ -401,14 +400,14 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '⊢∧'
                     )
                     new_sequent_b = Sequent(
                         old_sequent.left.copy(),
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '⊢∧'
                     )
                     del new_sequent_a.right[right_formula]
                     del new_sequent_b.right[right_formula]
@@ -429,7 +428,7 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '⊢∨'
                     )
                     del new_sequent.right[right_formula]
                     new_sequent.right[right_formula.formula_a] = \
@@ -446,7 +445,7 @@ def proveSequent(sequent):
                         old_sequent.right.copy(),
                         old_sequent.siblings,
                         old_sequent.depth + 1,
-                        None
+                        '⊢→'
                     )
                     del new_sequent.right[right_formula]
                     new_sequent.left[right_formula.formula_a] = \
@@ -498,7 +497,7 @@ def proveSequent(sequent):
 
     # no more sequents to prove
 
-    return (True, proof)
+    return (True, proof, sequent_proof)
 
 
 # returns True if the formula is provable

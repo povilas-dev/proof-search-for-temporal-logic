@@ -1,0 +1,28 @@
+.proof-table {
+    margin: 20px;
+}
+
+/*.proof-table td {*/
+/*    text-align: center;*/
+/*    height: 0.5em;*/
+/*    vertical-align: bottom;*/
+/*}*/
+
+.proof-table tr:last-child td {
+    border-bottom: none;
+}
+
+/*.proof-table td.conc {*/
+/*    border-top: solid 1px;*/
+/*}*/
+
+.proof-tree-container {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
+
+/*div.rulename {*/
+/*    margin-bottom: -2em;*/
+/*}*/
+

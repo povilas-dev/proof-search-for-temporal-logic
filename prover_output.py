@@ -460,15 +460,15 @@ def resolve(inp):
             formula = parse(tokens)
             check_formula(formula)
             old_stdout = sys.stdout
-            boolean_result, proof = proveFormula(axioms | set(lemmas.keys()), formula)
+            boolean_result, proof, sequent_list = proveFormula(axioms | set(lemmas.keys()), formula)
             sys.stdout = old_stdout
             if boolean_result:
                 print('Formula proven: %s.' % formula)
-                return boolean_result, proof
+                return boolean_result, proof, sequent_list
                 # print('Formula proven: %s.' % formula)
             else:
                 print('Formula unprovable: %s.' % formula)
-                return boolean_result, None
+                return boolean_result, None, None
 
                 # print('Formula unprovable: %s.' % formula)
     except InvalidInputError as e:

@@ -1,5 +1,11 @@
 {% extends "base.html"%}
-{% block title %}Sequent proof{% endblock %}
+{% block styles%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/proof.css') }}">
+{% endblock %}
+{% block title %}
+Sequent proof
+{% endblock %}
 {% block content %}
 
 <section class="sub-container" style="width: 50%;">
@@ -21,6 +27,42 @@
          {{proof}}
     </code>
 </pre>
+    </div>
+    <div class="sub-container proof-tree-container">
+        <table class="proof-table">
+            {% for el in sequent_list %}
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>{{el}}</td>
+                            <td>
+                                <div class="rulename">
+                                    {% if el.applied_operation != None %}
+                                    <span class="bold">({{el.applied_operation}})</span>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </td>
+<!--                <td class="rulename" rowspan="2">-->
+<!--                    <div class="rulename">-->
+<!--                        {% if el.applied_operation != None %}-->
+<!--                        <span class="bold">({{el.applied_operation}})</span>-->
+<!--                        {% endif %}-->
+<!--                    </div>-->
+<!--                </td>-->
+            </tr>
+<!--            <tr>-->
+<!--                <td class="conc">{{el}}</td>-->
+<!--            </tr>-->
+            {% endfor %}
+        </table>
     </div>
 </section>
 {% endif %}
