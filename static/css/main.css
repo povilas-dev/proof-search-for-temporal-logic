@@ -89,4 +89,18 @@ pre code {
     z-index: 10;
     top: 60px;
     left: 26px;
+    width: inherit !important;
+}
+
+#back-button-form {
+    margin: 0px 0px 0px 20px;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: grey;
+  text-align: center;
 }

@@ -1,32 +1,31 @@
 {% extends "base.html"%}
 {% block title %}Sequent proof{% endblock %}
 {% block content %}
-<div>
-    <section class="sub-container" style="width: 100%;">
-        <h2>
-            {% if boolean_result %}
-            <img id="proof-success" class="proof-status" src="{{ url_for('static', filename='icons/checkmark.svg') }}">
-            Sekvencija „{{sequent}}“ yra išvedama.
-            {% else %}
-            <img id="proof-failed" class="proof-status" src="{{ url_for('static', filename='icons/remove.svg') }}">
-            Sekvencija „{{sequent}}“ yra neišvedama.
-            {% endif %}
-        </h2>
 
-        {% if proof %}
-        <h2>Sekvencijos išvedimas:</h2>
-        <div class="proofContainer">
+<section class="sub-container" style="width: 50%;">
+    <h2>
+        {% if boolean_result %}
+        <img id="proof-success" class="proof-status" src="{{ url_for('static', filename='icons/checkmark.svg') }}">
+        Sekvencija „{{sequent}}“ yra išvedama.
+        {% else %}
+        <img id="proof-failed" class="proof-status" src="{{ url_for('static', filename='icons/remove.svg') }}">
+        Sekvencija „{{sequent}}“ yra neišvedama.
+        {% endif %}
+    </h2>
+
+    {% if proof %}
+    <h2>Sekvencijos išvedimas:</h2>
+    <div class="proofContainer">
 <pre>
     <code>
          {{proof}}
     </code>
 </pre>
-        </div>
-    </section>
-    {% endif %}
-    {% include 'input-component.html' %}
-    <form id="back-button-form" action="/" method="get">
-        <input type="submit" class="btn btn-outline-secondary" value="Grįžti atgal"/>
-    </form>
-</div>
+    </div>
+</section>
+{% endif %}
+{% include 'input-component.html' %}
+<form id="back-button-form" action="/" method="get">
+    <input type="submit" class="btn btn-outline-secondary" value="Grįžti atgal"/>
+</form>
 {% endblock %}
