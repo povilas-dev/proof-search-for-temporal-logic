@@ -5,6 +5,7 @@
 
 from language import *
 from io import StringIO
+from anytree import Node, RenderTree
 import sys
 
 
@@ -149,8 +150,12 @@ class Sequent:
 def proveSequent(sequent):
     global proof
     sequent_proof = []
-    result = StringIO()
-    sys.stdout = result
+    # result = StringIO()
+    # sys.stdout = result
+    tree = None
+    new_root_a = None
+    new_root_b = None
+    new_root = None
 
     # reset the time for each formula in the sequent
     for formula in sequent.left:
@@ -172,7 +177,23 @@ def proveSequent(sequent):
         if old_sequent is None:
             break
         print('%s. %s' % (old_sequent.depth, old_sequent))
-        proof = result.getvalue()
+        if tree is None:
+            old_root = Node(old_sequent, id=old_sequent.__hash__())
+            tree = old_root
+        elif new_root_a is None and new_root_b is None:
+            old_root = new_root
+            new_root = None
+
+        if new_root_a is not None and new_root_a.id == old_sequent.__hash__():
+            old_root = new_root_a
+            new_root_a = None
+
+        if new_root_b is not None and new_root_b.id == old_sequent.__hash__():
+            old_root = new_root_b
+            new_root_b = None
+
+        # proof = result.getvalue()
+        proof ="tatata ta"
         sequent_proof.append(old_sequent)
 
         # check if this sequent is axiomatically true without unification
@@ -258,7 +279,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '¬⊢',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     del new_sequent.left[left_formula]
                     new_sequent.right[left_formula.formula] = \
@@ -266,6 +287,7 @@ def proveSequent(sequent):
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
                     frontier.append(new_sequent)
+                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     break
                 if isinstance(left_formula, And):
                     new_sequent = Sequent(
@@ -274,7 +296,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '∧⊢',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     del new_sequent.left[left_formula]
                     new_sequent.left[left_formula.formula_a] = \
@@ -284,6 +306,7 @@ def proveSequent(sequent):
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
                     frontier.append(new_sequent)
+                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     break
                 if isinstance(left_formula, Or):
                     new_sequent_a = Sequent(
@@ -292,7 +315,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '∨⊢',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     new_sequent_b = Sequent(
                         old_sequent.left.copy(),
@@ -300,7 +323,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '∨⊢',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     del new_sequent_a.left[left_formula]
                     del new_sequent_b.left[left_formula]
@@ -310,9 +333,12 @@ def proveSequent(sequent):
                         old_sequent.left[left_formula] + 1
                     if new_sequent_a.siblings is not None:
                         new_sequent_a.siblings.add(new_sequent_a)
+                    new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
                     frontier.append(new_sequent_a)
                     if new_sequent_b.siblings is not None:
                         new_sequent_b.siblings.add(new_sequent_b)
+                    old_sequent.right_child_hash = new_sequent_b.__hash__()
+                    new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
                     frontier.append(new_sequent_b)
                     break
                 if isinstance(left_formula, Implies):
@@ -322,7 +348,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '→⊢',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     new_sequent_b = Sequent(
                         old_sequent.left.copy(),
@@ -330,7 +356,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '→⊢',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     del new_sequent_a.left[left_formula]
                     del new_sequent_b.left[left_formula]
@@ -340,51 +366,53 @@ def proveSequent(sequent):
                         old_sequent.left[left_formula] + 1
                     if new_sequent_a.siblings is not None:
                         new_sequent_a.siblings.add(new_sequent_a)
+                    new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
                     frontier.append(new_sequent_a)
                     if new_sequent_b.siblings is not None:
                         new_sequent_b.siblings.add(new_sequent_b)
+                    new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
                     frontier.append(new_sequent_b)
                     break
-                if isinstance(left_formula, ForAll):
-                    new_sequent = Sequent(
-                        old_sequent.left.copy(),
-                        old_sequent.right.copy(),
-                        old_sequent.siblings or set(),
-                        old_sequent.depth + 1,
-                        None,
-                        None
-                    )
-                    new_sequent.left[left_formula] += 1
-                    formula = left_formula.formula.replace(
-                        left_formula.variable,
-                        UnificationTerm(old_sequent.getVariableName('t'))
-                    )
-                    formula.setInstantiationTime(old_sequent.depth + 1)
-                    if formula not in new_sequent.left:
-                        new_sequent.left[formula] = new_sequent.left[left_formula]
-                    if new_sequent.siblings is not None:
-                        new_sequent.siblings.add(new_sequent)
-                    frontier.append(new_sequent)
-                    break
-                if isinstance(left_formula, ThereExists):
-                    new_sequent = Sequent(
-                        old_sequent.left.copy(),
-                        old_sequent.right.copy(),
-                        old_sequent.siblings,
-                        old_sequent.depth + 1,
-                        None,
-                        None
-                    )
-                    del new_sequent.left[left_formula]
-                    variable = Variable(old_sequent.getVariableName('v'))
-                    formula = left_formula.formula.replace(left_formula.variable,
-                                                           variable)
-                    formula.setInstantiationTime(old_sequent.depth + 1)
-                    new_sequent.left[formula] = old_sequent.left[left_formula] + 1
-                    if new_sequent.siblings is not None:
-                        new_sequent.siblings.add(new_sequent)
-                    frontier.append(new_sequent)
-                    break
+                # if isinstance(left_formula, ForAll):
+                #     new_sequent = Sequent(
+                #         old_sequent.left.copy(),
+                #         old_sequent.right.copy(),
+                #         old_sequent.siblings or set(),
+                #         old_sequent.depth + 1,
+                #         None,
+                #         None
+                #     )
+                #     new_sequent.left[left_formula] += 1
+                #     formula = left_formula.formula.replace(
+                #         left_formula.variable,
+                #         UnificationTerm(old_sequent.getVariableName('t'))
+                #     )
+                #     formula.setInstantiationTime(old_sequent.depth + 1)
+                #     if formula not in new_sequent.left:
+                #         new_sequent.left[formula] = new_sequent.left[left_formula]
+                #     if new_sequent.siblings is not None:
+                #         new_sequent.siblings.add(new_sequent)
+                #     frontier.append(new_sequent)
+                #     break
+                # if isinstance(left_formula, ThereExists):
+                #     new_sequent = Sequent(
+                #         old_sequent.left.copy(),
+                #         old_sequent.right.copy(),
+                #         old_sequent.siblings,
+                #         old_sequent.depth + 1,
+                #         None,
+                #         None
+                #     )
+                #     del new_sequent.left[left_formula]
+                #     variable = Variable(old_sequent.getVariableName('v'))
+                #     formula = left_formula.formula.replace(left_formula.variable,
+                #                                            variable)
+                #     formula.setInstantiationTime(old_sequent.depth + 1)
+                #     new_sequent.left[formula] = old_sequent.left[left_formula] + 1
+                #     if new_sequent.siblings is not None:
+                #         new_sequent.siblings.add(new_sequent)
+                #     frontier.append(new_sequent)
+                #     break
 
             # apply a right rule
             if apply_right:
@@ -402,6 +430,7 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
+                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     frontier.append(new_sequent)
                     break
                 if isinstance(right_formula, And):
@@ -429,9 +458,11 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent_a.siblings is not None:
                         new_sequent_a.siblings.add(new_sequent_a)
+                    new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
                     frontier.append(new_sequent_a)
                     if new_sequent_b.siblings is not None:
                         new_sequent_b.siblings.add(new_sequent_b)
+                    new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
                     frontier.append(new_sequent_b)
                     break
                 if isinstance(right_formula, Or):
@@ -441,7 +472,7 @@ def proveSequent(sequent):
                         old_sequent.siblings,
                         old_sequent.depth + 1,
                         '⊢∨',
-                        old_sequent.__hash__()
+                        old_sequent.__hash__(),
                     )
                     del new_sequent.right[right_formula]
                     new_sequent.right[right_formula.formula_a] = \
@@ -450,6 +481,7 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
+                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     frontier.append(new_sequent)
                     break
                 if isinstance(right_formula, Implies):
@@ -468,52 +500,56 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
+                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     frontier.append(new_sequent)
                     break
-                if isinstance(right_formula, ForAll):
-                    new_sequent = Sequent(
-                        old_sequent.left.copy(),
-                        old_sequent.right.copy(),
-                        old_sequent.siblings,
-                        old_sequent.depth + 1,
-                        None,
-                        None
-                    )
-                    del new_sequent.right[right_formula]
-                    variable = Variable(old_sequent.getVariableName('v'))
-                    formula = right_formula.formula.replace(right_formula.variable,
-                                                            variable)
-                    formula.setInstantiationTime(old_sequent.depth + 1)
-                    new_sequent.right[formula] = old_sequent.right[right_formula] + 1
-                    if new_sequent.siblings is not None:
-                        new_sequent.siblings.add(new_sequent)
-                    frontier.append(new_sequent)
-                    break
-                if isinstance(right_formula, ThereExists):
-                    new_sequent = Sequent(
-                        old_sequent.left.copy(),
-                        old_sequent.right.copy(),
-                        old_sequent.siblings or set(),
-                        old_sequent.depth + 1,
-                        None,
-                        None
-                    )
-                    new_sequent.right[right_formula] += 1
-                    formula = right_formula.formula.replace(
-                        right_formula.variable,
-                        UnificationTerm(old_sequent.getVariableName('t'))
-                    )
-                    formula.setInstantiationTime(old_sequent.depth + 1)
-                    if formula not in new_sequent.right:
-                        new_sequent.right[formula] = new_sequent.right[right_formula]
-                    if new_sequent.siblings is not None:
-                        new_sequent.siblings.add(new_sequent)
-                    frontier.append(new_sequent)
-                    break
+                # if isinstance(right_formula, ForAll):
+                #     new_sequent = Sequent(
+                #         old_sequent.left.copy(),
+                #         old_sequent.right.copy(),
+                #         old_sequent.siblings,
+                #         old_sequent.depth + 1,
+                #         None,
+                #         None
+                #     )
+                #     del new_sequent.right[right_formula]
+                #     variable = Variable(old_sequent.getVariableName('v'))
+                #     formula = right_formula.formula.replace(right_formula.variable,
+                #                                             variable)
+                #     formula.setInstantiationTime(old_sequent.depth + 1)
+                #     new_sequent.right[formula] = old_sequent.right[right_formula] + 1
+                #     if new_sequent.siblings is not None:
+                #         new_sequent.siblings.add(new_sequent)
+                #     frontier.append(new_sequent)
+                #     break
+                # if isinstance(right_formula, ThereExists):
+                #     new_sequent = Sequent(
+                #         old_sequent.left.copy(),
+                #         old_sequent.right.copy(),
+                #         old_sequent.siblings or set(),
+                #         old_sequent.depth + 1,
+                #         None,
+                #         None
+                #     )
+                #     new_sequent.right[right_formula] += 1
+                #     formula = right_formula.formula.replace(
+                #         right_formula.variable,
+                #         UnificationTerm(old_sequent.getVariableName('t'))
+                #     )
+                #     formula.setInstantiationTime(old_sequent.depth + 1)
+                #     if formula not in new_sequent.right:
+                #         new_sequent.right[formula] = new_sequent.right[right_formula]
+                #     if new_sequent.siblings is not None:
+                #         new_sequent.siblings.add(new_sequent)
+                #     frontier.append(new_sequent)
+                #     break
 
     # no more sequents to prove
-
-    return (True, proof, sequent_proof)
+    # print("HAA")
+    # print("TREE DEPTH: ", tree.depth)
+    # for pre, fill, node in RenderTree(tree):
+    #     print("%s%s" % (pre, node))
+    return (True, proof, sequent_proof, tree)
 
 
 # returns True if the formula is provable
@@ -525,5 +561,5 @@ def proveFormula(axioms, formula):
         None,
         0,
         None,
-        None
+        None,
     ))

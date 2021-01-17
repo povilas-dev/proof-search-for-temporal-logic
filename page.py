@@ -24,8 +24,8 @@ def proof(seq):
             proof_list.pop()
             proof_list.reverse()
             sequent_proof_list.reverse()
-            for el in sequent_proof_list:
-                print("seq: ", el, "parent:", el.parent_hash)
+            # for el in sequent_proof_list:
+                # print("seq: ", el, "parent:", el.parent_hash)
                 # print(el.siblings)
             # tree = build_tree(sequent_proof_list)
             return render_template("proof.html", sequent=seq, boolean_result=result, sequent_list=sequent_proof_list,
