@@ -177,23 +177,9 @@ def proveSequent(sequent):
         if old_sequent is None:
             break
         print('%s. %s' % (old_sequent.depth, old_sequent))
-        if tree is None:
-            old_root = Node(old_sequent, id=old_sequent.__hash__())
-            tree = old_root
-        elif new_root_a is None and new_root_b is None:
-            old_root = new_root
-            new_root = None
-
-        if new_root_a is not None and new_root_a.id == old_sequent.__hash__():
-            old_root = new_root_a
-            new_root_a = None
-
-        if new_root_b is not None and new_root_b.id == old_sequent.__hash__():
-            old_root = new_root_b
-            new_root_b = None
 
         # proof = result.getvalue()
-        proof ="tatata ta"
+        proof = "tatata ta"
         sequent_proof.append(old_sequent)
 
         # check if this sequent is axiomatically true without unification
@@ -287,7 +273,7 @@ def proveSequent(sequent):
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
                     frontier.append(new_sequent)
-                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
+                    # new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     break
                 if isinstance(left_formula, And):
                     new_sequent = Sequent(
@@ -306,7 +292,7 @@ def proveSequent(sequent):
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
                     frontier.append(new_sequent)
-                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
+                    # new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     break
                 if isinstance(left_formula, Or):
                     new_sequent_a = Sequent(
@@ -333,12 +319,12 @@ def proveSequent(sequent):
                         old_sequent.left[left_formula] + 1
                     if new_sequent_a.siblings is not None:
                         new_sequent_a.siblings.add(new_sequent_a)
-                    new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
+                    # new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
                     frontier.append(new_sequent_a)
                     if new_sequent_b.siblings is not None:
                         new_sequent_b.siblings.add(new_sequent_b)
                     old_sequent.right_child_hash = new_sequent_b.__hash__()
-                    new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
+                    # new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
                     frontier.append(new_sequent_b)
                     break
                 if isinstance(left_formula, Implies):
@@ -366,11 +352,11 @@ def proveSequent(sequent):
                         old_sequent.left[left_formula] + 1
                     if new_sequent_a.siblings is not None:
                         new_sequent_a.siblings.add(new_sequent_a)
-                    new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
+                    # new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
                     frontier.append(new_sequent_a)
                     if new_sequent_b.siblings is not None:
                         new_sequent_b.siblings.add(new_sequent_b)
-                    new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
+                    # new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
                     frontier.append(new_sequent_b)
                     break
                 # if isinstance(left_formula, ForAll):
@@ -430,7 +416,7 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
-                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
+                    # new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     frontier.append(new_sequent)
                     break
                 if isinstance(right_formula, And):
@@ -458,11 +444,11 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent_a.siblings is not None:
                         new_sequent_a.siblings.add(new_sequent_a)
-                    new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
+                    # new_root_a = Node(new_sequent_a,id=new_sequent_a.__hash__(), parent=old_root)
                     frontier.append(new_sequent_a)
                     if new_sequent_b.siblings is not None:
                         new_sequent_b.siblings.add(new_sequent_b)
-                    new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
+                    # new_root_b = Node(new_sequent_b,id=new_sequent_b.__hash__(), parent=old_root)
                     frontier.append(new_sequent_b)
                     break
                 if isinstance(right_formula, Or):
@@ -481,7 +467,7 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
-                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
+                    # new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     frontier.append(new_sequent)
                     break
                 if isinstance(right_formula, Implies):
@@ -500,7 +486,7 @@ def proveSequent(sequent):
                         old_sequent.right[right_formula] + 1
                     if new_sequent.siblings is not None:
                         new_sequent.siblings.add(new_sequent)
-                    new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
+                    # new_root = Node(new_sequent,id=new_sequent.__hash__(), parent=old_root)
                     frontier.append(new_sequent)
                     break
                 # if isinstance(right_formula, ForAll):
@@ -549,7 +535,18 @@ def proveSequent(sequent):
     # print("TREE DEPTH: ", tree.depth)
     # for pre, fill, node in RenderTree(tree):
     #     print("%s%s" % (pre, node))
-    return (True, proof, sequent_proof, tree)
+
+    # print(proven)
+    print("proven: ")
+    # build initial tree
+    print("initial length: ", len(sequent_proof))
+    tree = Node(next(el for el in sequent_proof if el.parent_hash is None))
+    new_list = list(filter(lambda el: el.parent_hash is not None, sequent_proof))
+    print("new length: ", len(new_list))
+    for i in new_list:
+        print(i)
+
+    return (True, proof, sequent_proof)
 
 
 # returns True if the formula is provable

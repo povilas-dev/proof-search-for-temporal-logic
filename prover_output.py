@@ -459,12 +459,12 @@ def resolve(inp):
             formula = parse(tokens)
             check_formula(formula)
             # old_stdout = sys.stdout
-            boolean_result, proof, sequent_list, tree = proveFormula(axioms | set(lemmas.keys()), formula)
+            boolean_result, proof, sequent_list = proveFormula(axioms | set(lemmas.keys()), formula)
             # sys.stdout = old_stdout
             print("HAHAA")
-            print("TREE DEPTH: ", tree.height)
-            for pre, fill, node in RenderTree(tree):
-                print("%s%s" % (pre, node.name))
+            # print("TREE height: ", tree.height)
+            # for pre, fill, node in RenderTree(tree):
+            #     print("%s%s" % (pre, node.name))
             if boolean_result:
                 print('Formula proven: %s.' % formula)
                 return boolean_result, proof, sequent_list
