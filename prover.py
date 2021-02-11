@@ -4,9 +4,7 @@
 # 2014 Stephan Boyer
 
 from language import *
-from io import StringIO
 from anytree import Node, RenderTree
-import sys
 
 
 ##############################################################################

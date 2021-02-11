@@ -38,11 +38,17 @@ pre code {
     margin-bottom: 20px;
 }
 .propositions, .operations {
-    width: 360px;
+    width: 400px;
     margin-bottom: 20px;
 }
 .operations li {
-    width: 180px;
+    width: 200px;
+}
+
+.instruction-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .proof-status {

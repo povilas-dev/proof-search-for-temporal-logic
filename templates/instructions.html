@@ -11,37 +11,47 @@
             <p>3. Programa apskaičiuos ar pateikta sekvencija išvedama tiesinėje laiko logikoje <span
                     class="bold">PLTL<sup>n,a</sup></span> ir pateiks išvedimo medį.</p>
         </div>
-        <div class="propositions">
-            <ul class="list-group propositions">
-                <li class="list-group-item active" aria-current="true">Teiginiai</li>
-                <li class="list-group-item">
-                <span class="rule"><span class="bold">P</span>,
-                    <span class="bold">Q</span>,
-                    <span class="bold">R</span>, ir kt...</span>
-                </li>
-            </ul>
-        </div>
-        <div class="operations">
-            <ul class="list-group list-group-horizontal ">
-                <li class="list-group-item active rule">Sintaksė</li>
-                <li class="list-group-item active rule">Loginės operacijos</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-                <li class="list-group-item rule">P <span class="bold">and</span> Q</li>
-                <li class="list-group-item bold">Konjunkcija</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-                <li class="list-group-item rule">P <span class="bold">or</span> Q</li>
-                <li class="list-group-item bold">Disjunkcija</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-                <li class="list-group-item rule">P <span class="bold">implies</span> Q</li>
-                <li class="list-group-item bold">Implikacija</li>
-            </ul>
-            <ul class="list-group list-group-horizontal">
-                <li class="list-group-item rule"><span class="bold">not</span> P</li>
-                <li class="list-group-item bold">Neigimas</li>
-            </ul>
+        <div class="instruction-container">
+            <div class="propositions">
+                <ul class="list-group propositions">
+                    <li class="list-group-item active" aria-current="true">Teiginiai</li>
+                    <li class="list-group-item">
+                    <span class="rule"><span class="bold">P</span>,
+                        <span class="bold">Q</span>,
+                        <span class="bold">R</span>, ir kt...</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="operations">
+                <ul class="list-group list-group-horizontal ">
+                    <li class="list-group-item active rule">Sintaksė</li>
+                    <li class="list-group-item active rule">Loginės operacijos</li>
+                </ul>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item rule">P <span class="bold">and</span> Q</li>
+                    <li class="list-group-item bold">Konjunkcija</li>
+                </ul>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item rule">P <span class="bold">or</span> Q</li>
+                    <li class="list-group-item bold">Disjunkcija</li>
+                </ul>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item rule">P <span class="bold">implies</span> Q</li>
+                    <li class="list-group-item bold">Implikacija</li>
+                </ul>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item rule"><span class="bold">not</span> P</li>
+                    <li class="list-group-item bold">Neigimas</li>
+                </ul>
+                     <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item rule"><span class="bold">always</span>(P)</li>
+                    <li class="list-group-item bold">Būtinumas</li>
+                </ul>
+                     <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item rule"><span class="bold">next</span>(P)</li>
+                    <li class="list-group-item bold">„Kitu laiko momentu“</li>
+                </ul>
+            </div>
         </div>
     </div>
     {% include 'input-component.html' %}
