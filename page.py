@@ -17,8 +17,10 @@ def proof(seq):
         flash(received_result.message)
         return render_template("index.html")
     else:
-        (result, result_proof, sequent_proof_list) = received_result
-        if (result, result_proof, sequent_proof_list) != (False, None, None):
+        (result, result_proof, sequent_proof_list, jsonTree) = received_result
+        if (result, result_proof, sequent_proof_list,jsonTree) != (False, None, None, None):
+            print("Tree: ")
+            print(jsonTree)
             print("Proof:")
             proof_list = result_proof.split('\n')
             proof_list.pop()
@@ -29,7 +31,7 @@ def proof(seq):
                 # print(el.siblings)
             # tree = build_tree(sequent_proof_list)
             return render_template("proof.html", sequent=seq, boolean_result=result, sequent_list=sequent_proof_list,
-                                   proof='\n'.join(map(str, proof_list)))
+                                   proof='\n'.join(map(str, proof_list)), res=jsonTree)
         else:
             return render_template("proof.html", sequent=seq, boolean_result=result, proof=result_proof)
 

@@ -2,6 +2,18 @@
 {% block styles%}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/proof.css') }}">
+<script>
+console.log("script works")
+console.log("tree: ",JSON.parse('{{ res|tojson }}'))
+    $(function() {
+  var mytree = JSON.parse('{{ res|tojson }}');
+
+  $('#tree').treeview({
+    data: mytree
+  });
+});
+
+</script>
 {% endblock %}
 {% block title %}
 Sequent proof
@@ -18,7 +30,8 @@ Sequent proof
         Sekvencija „{{sequent}}“ yra neišvedama.
         {% endif %}
     </h2>
-
+    <div id="tree"></div>
+    {% print(res) %}
     {% if proof %}
     <h2>Sekvencijos išvedimas:</h2>
     <div class="proofContainer">

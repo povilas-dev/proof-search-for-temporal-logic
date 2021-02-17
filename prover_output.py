@@ -4,6 +4,7 @@
 # 2014 Stephan Boyer
 
 from prover import *
+from anytree.exporter import JsonExporter
 
 
 ##############################################################################
@@ -464,10 +465,11 @@ def resolve(inp):
             print("HAHAA")
             print("TREE DEPTH: ", tree.height)
             for pre, fill, node in RenderTree(tree):
-                print("%s%s" % (pre, node.name))
+                print("%s%s applied operation: %s)" % (pre, node.name, node.applied_operation))
             if boolean_result:
                 print('Formula proven: %s.' % formula)
-                return boolean_result, proof, sequent_list
+                exporter = JsonExporter(indent=2, sort_keys=False, ensure_ascii=False)
+                return boolean_result, proof, sequent_list, exporter.export(tree)
                 # print('Formula proven: %s.' % formula)
             else:
                 print('Formula unprovable: %s.' % formula)
