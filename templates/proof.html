@@ -3,16 +3,30 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/proof.css') }}">
 <script>
-console.log("script works")
-console.log("tree: ",JSON.parse('{{ res|tojson }}'))
-    $(function() {
-  var mytree = JSON.parse('{{ res|tojson }}');
-
-  $('#tree').treeview({
-    data: mytree
-  });
-});
-
+const treeVisualiser = (data) => {
+  return `
+  <table>
+    <tr>
+      ${
+        data.children === undefined
+          ? `<td>⊕</td>`
+          : data.children
+              .map((el) => {
+                return `<td>${treeVisualiser(el)}</td>`;
+              })
+              .join("")
+      }
+      <td class="rulename" rowspan="2">
+            <div class="rulename">${data.applied_operation.length > 0 ? '('+data.applied_operation+')': ''}</div>
+        </td>
+    </tr>
+    <tr>
+      <td class="conc" colspan="2">
+        ${data.name}
+      </td>
+    </tr>
+  </table>`;
+};
 </script>
 {% endblock %}
 {% block title %}
@@ -20,7 +34,7 @@ Sequent proof
 {% endblock %}
 {% block content %}
 
-<section class="sub-container" style="width: 50%;">
+<section class="sub-container" >
     <h2>
         {% if boolean_result %}
         <img id="proof-success" class="proof-status" src="{{ url_for('static', filename='icons/checkmark.svg') }}">
@@ -30,32 +44,17 @@ Sequent proof
         Sekvencija „{{sequent}}“ yra neišvedama.
         {% endif %}
     </h2>
-    <div id="tree"></div>
-    {% print(res) %}
-    {% if proof %}
+    {% if boolean_result %}
     <h2>Sekvencijos išvedimas:</h2>
     <div class="proofContainer">
 <pre>
-    <code>
-         {{proof}}
-    </code>
 </pre>
     </div>
     <div class="sub-container proof-tree-container">
-        <table class="proof-table">
-            {% for el in sequent_list %}
-            <tr>
-                <td class="conc" colspan="2">{{el}}</td>
-                <td class="rulename" rowspan="2">
-                    <div class="rulename">
-                        {% if el.applied_operation != None %}
-                        <span class="bold">({{el.applied_operation}})</span>
-                        {% endif %}
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+    <script>
+    const response = JSON.parse('{{ res|safe }}')
+    console.log("response:",response)
+    document.write(treeVisualiser(response))</script>
     </div>
 </section>
 {% endif %}

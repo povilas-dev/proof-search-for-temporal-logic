@@ -1,29 +1,23 @@
-.proof-table {
-    margin: 20px;
-}
-
-.proof-table td {
-    text-align: center;
-    height: 0.5em;
-    vertical-align: bottom;
-}
-
-.proof-table tr:last-child td {
-    border-bottom: none;
-}
-
-.proof-table td.conc {
-    border-top: solid 1px;
-}
-
 .proof-tree-container {
     display: flex;
     justify-content: center;
     background-color: white;
 }
 
-div.rulename {
-    margin-bottom: 1em;
-    padding-left: 4px;
+td {
+    text-align:center;
+    height: 1.8em;
+    vertical-align:bottom;
+    padding-left: 2px;
+    padding-right: 2px;
+
 }
 
+td.conc {
+    border-top: solid 1px;
+}
+
+div.rulename {
+    margin-top:-2.6em;
+    background-color: white;
+}

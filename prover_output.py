@@ -468,7 +468,7 @@ def resolve(inp):
                 print("%s%s applied operation: %s)" % (pre, node.name, node.applied_operation))
             if boolean_result:
                 print('Formula proven: %s.' % formula)
-                exporter = JsonExporter(indent=2, sort_keys=False, ensure_ascii=False)
+                exporter = JsonExporter(sort_keys=False, ensure_ascii=False)
                 return boolean_result, proof, sequent_list, exporter.export(tree)
                 # print('Formula proven: %s.' % formula)
             else:
