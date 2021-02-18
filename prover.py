@@ -4,9 +4,7 @@
 # 2014 Stephan Boyer
 
 from language import *
-from anytree import Node, RenderTree
-import sys
-
+from anytree import Node
 
 ##############################################################################
 # Unification
@@ -177,7 +175,6 @@ def proveSequent(sequent):
             # frontier.reverse()
         if old_sequent is None:
             break
-        print('%s. %s, applied: %s' % (old_sequent.depth, old_sequent, old_sequent.applied_operation))
         if tree is None:
             old_root = Node(name=old_sequent.__str__(), id=old_sequent.__hash__(), applied_operation= '')
             tree = old_root
